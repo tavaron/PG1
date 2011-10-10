@@ -1,0 +1,16 @@
+
+[indentation]
+indent_width=4
+indent_type=1
+indent_hard_tab_width=8
+detect_indent=false
+indent_mode=2
+
+[project]
+name=UE01
+base_path=/home/marius/Dokumente/FH/Semester 1/PG/UE01/
+make_in_base_path=false
+
+[files]
+current_page=1
+FILE_NAME_0=335;C;0;16;1;1;1;/home/marius/Dokumente/FH/Semester 1/PG/UE01/main.c;0
