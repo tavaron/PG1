@@ -27,5 +27,4 @@ int main(int argc, char** argv)
     scanf("%d", &zahl);
     printf("Gleitkomma:    %.2F\nLinksbuendig:  %-d\nRechtsbuendig: %5d", (float) zahl, zahl, zahl);
     return 0;
-
 }
