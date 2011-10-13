@@ -10,6 +10,9 @@ indent_mode=2
 name=UE02
 base_path=/home/marius/Dokumente/FH/Semester 1/PG/UE02/
 make_in_base_path=false
+description=
+run_cmd=
 
 [files]
-current_page=-1
+current_page=0
+FILE_NAME_0=771;C;0;16;1;1;0;/home/marius/FH/Sem1/PG/UE02/main.c;0
