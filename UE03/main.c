@@ -23,10 +23,11 @@ void numbers(int count);
 
 int main(int argc, char** argv)
 {
-	int i = 0;
-	for(i=0;i<=9;i++)
+	int i = 0,
+		zeilen = 9;
+	for(i=0;i<=zeilen;i++)
 	{
-		spaces(9-i);
+		spaces(zeilen-i);
 		numbers(i);
 		printf("\n");
 	}
