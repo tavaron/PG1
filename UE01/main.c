@@ -8,11 +8,11 @@
  *      Datum:      10.10.2011 v0.0
  *      geaendert:  10.10.2011
  *      
- *      Beschreibung:   !!!
+ *      Beschreibung:   nimmt einen integer entgegen und gibt diesen formatiert aus
  *      
- *      Eingabe:    !!!
+ *      Eingabe:    integer
  * 
- *      Ausgabe:    !!!
+ *      Ausgabe:    formatierter integer
  *      
  *      ------------------------------------------------------------------------
  */
@@ -23,11 +23,13 @@
 int main(int argc, char** argv)
 {
     int zahl = -1;
+    printf("Hello World\n");
     while(zahl!=0)
-    { 
+    {
+		zahl = -1;
 		printf("Bitte geben Sie eine Zahl ein: ");
 		scanf("%d", &zahl);
-		fflush(stdin);
+		while(getchar()!=10);
 		if(zahl!=0)
 			printf("Gleitkomma:    %.2F\nLinksbuendig:  %-d\nRechtsbuendig: %5d\n", (float) zahl, zahl, zahl);
 	}

@@ -20,17 +20,25 @@
  */
 
 #include <stdio.h>
+#define schrittweite 10
 
 int main(int argc, char** argv)
 {
     double 	tc = 0, //Temperatur in Celcius
 			tf = 0; //Temperatur in Fahrenheit
 	printf("Fahrenheit   Celcius\n"); //Gebe Kopfzeile aus
+	for(tf=200;tf>=0;) //Solange tf <= 200 ist...
+	{
+		tc = 5.0 / 9.0 * ( tf - 32.0 ); //Rechne passenden Celciuswert aus
+		printf("%10.0d%10.0d\n", (int) tf,(int) tc); //Gebe Werte aus
+		tf=tf-10.0; //Addiere 20 Grad Fahrenheit
+	}
+	printf("\nFahrenheit   Celcius\n"); //Gebe Kopfzeile aus
 	for(tf=0;tf<=200;) //Solange tf <= 200 ist...
 	{
 		tc = 5.0 / 9.0 * ( tf - 32.0 ); //Rechne passenden Celciuswert aus
 		printf("%10.1lf%10.1lf\n", tf, tc); //Gebe Werte aus
-		tf=tf+20.0; //Addiere 20 Grad Fahrenheit
+		tf=tf+10.0; //Addiere 20 Grad Fahrenheit
 	}
 
     return 0; //Beende ohne Fehler

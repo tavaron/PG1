@@ -4,14 +4,14 @@
 //      
 //      Name:		Marius Christ
 //      Matr.-Nr.:	954402
-//      Datum:		13.10.2011 v0.1
+//      Datum:		13.10.2011 v1.0
 //      geaendert:	13.10.2011
 //      
-//      Beschreibung: !!!
+//      Beschreibung: gibt eine zahlenpyramide aus
 //      
-//      Eingabe: !!!
+//      Eingabe: keine
 //      
-//      Ausgabe: !!!
+//      Ausgabe: zahlenpyramide
 //      
 //      ------------------------------------------------------------------------
 
@@ -25,9 +25,16 @@ int main(int argc, char** argv)
 {
 	int i = 0,
 		zeilen = 9;
+	for(i=zeilen;i>=0;i--)
+	{
+		spaces(zeilen-i+10);
+		numbers(i);
+		printf("\n");
+	}
+	
 	for(i=0;i<=zeilen;i++)
 	{
-		spaces(zeilen-i);
+		spaces(zeilen-i+10);
 		numbers(i);
 		printf("\n");
 	}
