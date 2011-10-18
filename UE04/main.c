@@ -7,11 +7,11 @@
 //      Datum:		17.10.2011 v0.1
 //      geaendert:	17.10.2011
 //      
-//      Beschreibung: !!!
+//      Beschreibung: Liest eine Hex-Zahl ein und gibt diese als Dezimalzahl aus.
 //      
-//      Eingabe: !!!
+//      Eingabe: Hex-Zahl, @ beendet Programm
 //      
-//      Ausgabe: !!!
+//      Ausgabe: Dezimalzahl, Eingabeaufforderung
 //      
 //      ------------------------------------------------------------------------
 
@@ -53,13 +53,13 @@ int main(int argc, char** argv)
 			}
 			else
 			{
-				printf("%c is not an hex value!\n", eingabe[i]);
+				printf("%c is not an hex value!\n\n", eingabe[i]);
 				status = 2;
 			}
 			i++;
 		}
 		if(status <= 1)
-			printf("Die eingegebene Zahl hat den Dezimalwert: %d\n", convert(eingabe, i));
+			printf("Die eingegebene Zahl hat den Dezimalwert: %d\n\n", convert(eingabe, i));
 	}
 	return 0;
 }
