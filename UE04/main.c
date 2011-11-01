@@ -45,7 +45,7 @@ int main(int argc, char** argv)
 				;
 			else if(eingabe[i] >= 48 && eingabe[i] <= 57)
 				;
-			else if(eingabe[i] == 64)
+			else if(eingabe[i] == '@')
 			{
 				printf("Exit...");
 				status = 3;
@@ -64,7 +64,7 @@ int main(int argc, char** argv)
 	return 0;
 }
 
-int convert(char eingabe[], int length)
+int convert(char* eingabe, int length)
 {
 	int dezimal = 0;
 	int i = 0;

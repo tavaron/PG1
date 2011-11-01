@@ -7,12 +7,10 @@ detect_indent=false
 indent_mode=2
 
 [project]
-name=UE06
-base_path=/home/marius/FH/Sem1/PG/UE06/
+name=UE07
+base_path=/home/marius/FH/Sem1/PG/UE07/
 make_in_base_path=false
-description=
-run_cmd=
 
 [files]
 current_page=0
-FILE_NAME_0=484;C;0;16;1;1;0;/home/marius/FH/Sem1/PG/UE06/main.c;0
+FILE_NAME_0=482;C;0;16;1;1;0;/home/marius/FH/Sem1/PG/UE07/main.c;0
