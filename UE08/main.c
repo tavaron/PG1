@@ -26,7 +26,7 @@ int main(int argc, char** argv)
 	FILE *f;
 	char c;
 	
-	//Widerhole
+	//Wiederhole
 	while(1) {
 		// Dateiabfrage
 		printf("In welcher Datei soll der Text gespeichert werden?\n");
