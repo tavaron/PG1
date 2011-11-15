@@ -10,6 +10,9 @@ indent_mode=2
 name=UE08
 base_path=/home/marius/FH/Sem1/PG/UE08/
 make_in_base_path=false
+description=
+run_cmd=
 
 [files]
-current_page=-1
+current_page=0
+FILE_NAME_0=0;C;0;16;1;1;0;/home/marius/FH/Sem1/PG/UE08/main.c;0
