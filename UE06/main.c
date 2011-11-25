@@ -36,11 +36,12 @@ int main(int argc, char** argv)
 		deg = 0;
 		// lese gradzahl ein
 		scanf("%lf",&deg);
-		
+		deg = (int) deg % 360;
 		// lese chars vom puffer bis CR
 		while((c=getchar()) != 10)
 			// wenn @ beende schleife/programm
 			if(c=='@') status=0;
+		
 		// fehler bei 0 grad / falscher eingabe
 		if(deg == 0)
 		{

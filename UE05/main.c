@@ -91,6 +91,7 @@ void printEingabe(int length, char* eingabe)
 			string10[i] = eingabe[i];
 		// string terminieren  (wegen wiederholten durchlaeufen)
 		string10[length] = '\0';
+		stringRest[0] = '\0';
 		// ausgabe
 		printf("Der gespeicherte String ist %s\n", string10);
 		printf("Die Zeichenfolge enthält %d Zeichen\n", length);

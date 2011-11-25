@@ -7,11 +7,12 @@
 //      Datum:      15.11.2011 v0.1
 //      geaendert:  15.11.2011
 //      
-//      Beschreibung: !!!
+//      Beschreibung: 	verwaltet eine telefonliste in einer
+//						verketteten liste
 //      
-//      Eingabe: !!!
+//      Eingabe: menuepunkte, eintraege
 //      
-//      Ausgabe: !!!
+//      Ausgabe: menue, liste
 //      
 //      ------------------------------------------------------------------------
 

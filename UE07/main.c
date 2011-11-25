@@ -7,7 +7,7 @@
 //      Datum:		01.11.2011 v0.1
 //      geaendert:	01.11.2011
 //      
-//      Beschreibung: wandelt eine gleitpunktpunktzahl
+//      Beschreibung: wandelt eine gleitpunktpunktzahl von string in double um
 //      
 //      Eingabe: eine gleitpunktzahl als string
 //      

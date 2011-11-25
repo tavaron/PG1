@@ -32,6 +32,7 @@ int main(int argc, char** argv)
 		status = 0;
 		//eigabeaufforderung
 		printf("Bitte geben Sie einen Hexwert ein: ");
+		// solange eingabe != CR
 		while( (eingabe[i] = getchar()) != 10)
 		{
 			// wenn CR - break
