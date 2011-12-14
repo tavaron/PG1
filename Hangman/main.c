@@ -20,6 +20,7 @@
 #include <stdlib.h>
 #include <curses.h>
 #include <string.h>
+#include <time.h>
 
 WINDOW* hangwin;
 
@@ -134,7 +135,48 @@ int drawHangman(WINDOW* win, int left, int yshift, int xshift)
 
 char* getWord()
 {
-	return "none";
+	FILE* f = fopen("liste.txt", "r");
+	char* wort = malloc(sizeof(char)*40);
+	wort = "none";
+	int i = 0;
+	int j = 0;
+	int woerter = 0;
+	char c;
+	
+	if(f == NULL)
+	{
+		printw("Wörterliste nicht gefunden!");
+		getchar();
+		exit(1);
+	}
+	
+	while((c=fgetc(f)) != EOF)
+	{
+		if(c==10)
+			woerter++;
+	}
+	
+	f = fopen("liste.txt", "r");
+	
+	srand(time(NULL));
+	i = rand() % woerter + 1;
+	
+	while(i>0)
+	{
+		c = fgetc(f);
+		if(c==10)
+			i--;
+	}
+	
+	while((c=fgetc(f))!=10)
+	{
+		wort[j] = c;
+		j++;
+	}
+	
+	wort[j] = '\0';
+	
+	return wort;
 }
 
 int newGame()
