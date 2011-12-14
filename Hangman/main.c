@@ -27,7 +27,14 @@ WINDOW* hangwin;
 int drawHangman(WINDOW* win, int left, int yshift, int xshift);
 int splashScreen();
 int newGame();
+void init_liste();
 char* getWord();
+
+struct word {
+	char s[40];
+	struct word *next;
+};
+struct word *kopf, *ende;
 
 void exitHandler() {
 	endwin();
@@ -61,6 +68,7 @@ int splashScreen()
 	int max_y, max_x;
 	
 	clear();
+	init_liste();
 	getmaxyx(stdscr, max_y, max_x);
 	y=max_y/2-5;
 	x=max_x/2-24;
@@ -133,6 +141,45 @@ int drawHangman(WINDOW* win, int left, int yshift, int xshift)
 	return 0;
 }
 
+void init_liste() {
+	// reserviere Speicher
+	kopf = (struct word*) malloc(sizeof(struct word));
+	ende = (struct word*) malloc(sizeof(struct word));
+	
+	// Wenn Speicher nicht reserviert werden konnte
+	if(kopf == NULL || ende == NULL)
+	{
+		// werfe Fehler und beende mit Errorcode 1
+		printw("Speicherplatzmangel...\n");
+		getchar();
+		exit(1);
+	}
+	// verkette Anfang mit Ende und baue Schleife am Ende
+	kopf->next = ende->next = ende;
+}
+
+int read_liste() {
+	int woerter = 0;
+	struct eintrag *element, *tmp;
+	element = (struct word*) malloc(sizeof(struct word));
+	FILE* f = fopen("liste.txt", "r");
+	do {
+		char wort[40];
+		int i = 0;
+		while( ((wort[i] = fgetc(f)) >= 65 && wort[i] <= 90) || (wort[i] >= 97 && wort[i] <= 122) )
+		{ i++; }
+		if(wort[i]!=
+		wort[i]='\0';
+		while(fgetc(f)!=10);
+		*element->s = wort;
+		tmp = anfang->next;
+		anfang->next = element;
+		element->next = tmp;
+	} while(element->next != element->next->next);
+	
+	return woerter;
+}
+
 char* getWord()
 {
 	FILE* f = fopen("liste.txt", "r");
@@ -155,7 +202,7 @@ char* getWord()
 		if(c==10)
 			woerter++;
 	}
-	
+	printw("Woerter: %d", woerter);
 	f = fopen("liste.txt", "r");
 	
 	srand(time(NULL));
