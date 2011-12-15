@@ -22,6 +22,7 @@
 #include <string.h>
 #include <time.h>
 
+
 WINDOW* hangwin;
 
 int drawHangman(WINDOW* win, int left, int yshift, int xshift);
@@ -29,12 +30,16 @@ int splashScreen();
 int newGame();
 char* getWord();
 int read_liste();
+void checkLetter();
+int toupper();
+int isalpha();
 
 int woerter = 0;
 char words[40][20];
 
 int main(int argc, char** argv)
 {
+	char c;
 	initscr();
 	curs_set(0);
 	noecho();
@@ -49,9 +54,38 @@ int main(int argc, char** argv)
 		return(1);
 	}
 	
-	splashScreen();
+	c = splashScreen();
 	hangwin = newwin(14, 10, 0, x-15);
-	while(newGame()!=1);
+	do
+	{
+		c = toupper(c);
+		if(c == 'N')
+			while(newGame() == 1);
+		else if(c == 'O')
+			;
+		else if(c == 'E')
+			break;
+		
+		getmaxyx(stdscr, y, x);
+		int left = (x/2) - 10;
+		int ceiling = (y/2) - 6;
+		wclear(stdscr);
+		
+		mvprintw(ceiling   , left, "++++++++++++++++++++");
+		mvprintw(ceiling+1 , left, "+                  +");
+		mvprintw(ceiling+2 , left, "+ N - Neues Spiel  +");
+		mvprintw(ceiling+3 , left, "+                  +");
+		mvprintw(ceiling+4 , left, "+ O - Optionen     +");
+		mvprintw(ceiling+5 , left, "+                  +");
+		mvprintw(ceiling+6 , left, "+ E - Ende         +");
+		mvprintw(ceiling+7 , left, "+                  +");
+		mvprintw(ceiling+8 , left, "+ Wörter: %2d      +", woerter);
+		mvprintw(ceiling+9 , left, "+                  +");
+		mvprintw(ceiling+10, left, "++++++++++++++++++++");
+		
+		refresh();
+	}while( (c=getch()) != 24);
+	
 	return 0;
 }
 
@@ -138,14 +172,14 @@ int read_liste() {
 	do {
 		
 		int i = 0;
-		while( ((words[woerter][i] = fgetc(f))!= 10 && words[woerter][i] != EOF && 	((words[woerter][i] >= 65 && words[woerter][i] <= 90) || (words[woerter][i] >= 97 && words[woerter][i] <= 122)) ))
+		while( ((words[woerter][i] = toupper(fgetc(f)))!= 10 && words[woerter][i] != EOF && 	((words[woerter][i] >= 65 && words[woerter][i] <= 90) || (words[woerter][i] >= 97 && words[woerter][i] <= 122)) ))
 		{ i++; }
 		if(words[woerter][i] == EOF)
 			break;
 		else if(words[woerter][i]!=10)
 			while(fgetc(f)!=10);
 		words[woerter][i]='\0';
-		printw("%s\n", words[woerter]);
+		//printw("%s\n", words[woerter]);
 		woerter++;
 	} while(woerter<40);
 	
@@ -161,18 +195,16 @@ char* getWord()
 	if(woerter==0)
 	return "none";
 	r = rand() % woerter;
-	
-	
-	//printw(" %s", words[r]);
-	return words[r];
+	return (char*)words[r];
 }
 
 int newGame()
 {
 	static char *wort, *tmpwort;
 	tmpwort = wort;
-	while(tmpwort == wort)
-		wort = getWord();
+	if(woerter<=1)
+		while(tmpwort == wort)
+			wort = getWord();
 	char c;
 	int i = 0;
 	
@@ -182,10 +214,22 @@ int newGame()
 	for(i=0;i<strlen(wort);i++)
 		printw("-");
 	refresh();
-	if((c=getch())== 24)
-		exit(0);
-	else if(c==18)
-		return 0;
+	while((c=getch())!= 18&&c!=24)
+	{
+		mvprintw(1,1,"Wort mit %d Buchstaben: ",strlen(wort));
+		if(isalpha((int)c))
+			checkLetter();
+		else
+		{
+			mvprintw(3,1, "Es werden nur Buchstaben akzeptiert");
+			mvprintw(4,1, "Neustart mit STRG+R");
+			mvprintw(5,1, "Beenden mit STRG+X");
+		}
+			
+	}
 	clear();
 	return 0;
 }
+
+void checkLetter()
+{}
