@@ -27,25 +27,18 @@ WINDOW* hangwin;
 int drawHangman(WINDOW* win, int left, int yshift, int xshift);
 int splashScreen();
 int newGame();
-void init_liste();
 char* getWord();
+int read_liste();
 
-struct word {
-	char s[40];
-	struct word *next;
-};
-struct word *kopf, *ende;
-
-void exitHandler() {
-	endwin();
-}
+int woerter = 0;
+char words[40][20];
 
 int main(int argc, char** argv)
 {
 	initscr();
 	curs_set(0);
 	noecho();
-	atexit((void*)exitHandler);
+	atexit((void*)endwin);
 	
 	int y, x;
 	getmaxyx(stdscr, y, x);
@@ -68,7 +61,7 @@ int splashScreen()
 	int max_y, max_x;
 	
 	clear();
-	init_liste();
+	read_liste();
 	getmaxyx(stdscr, max_y, max_x);
 	y=max_y/2-5;
 	x=max_x/2-24;
@@ -97,6 +90,7 @@ int drawHangman(WINDOW* win, int left, int yshift, int xshift)
 	int y, x;
 	int max_y, max_x;
 	
+	wclear(hangwin);
 	getmaxyx(win,max_y, max_x);
 	if(max_y<14||max_x<10) {
 		mvwprintw(win, 0, 0, "Fenster zu klein!");
@@ -133,111 +127,65 @@ int drawHangman(WINDOW* win, int left, int yshift, int xshift)
 		mvwaddstr(win, y+4, x+7, "o");
 		mvwaddstr(win, y+5, x+5, "-/-");
 		mvwaddstr(win, y+6, x+5, "/\\");
-
 	}
-	
-	wrefresh(win);
 	refresh();
 	return 0;
 }
 
-void init_liste() {
-	// reserviere Speicher
-	kopf = (struct word*) malloc(sizeof(struct word));
-	ende = (struct word*) malloc(sizeof(struct word));
-	
-	// Wenn Speicher nicht reserviert werden konnte
-	if(kopf == NULL || ende == NULL)
-	{
-		// werfe Fehler und beende mit Errorcode 1
-		printw("Speicherplatzmangel...\n");
-		getchar();
-		exit(1);
-	}
-	// verkette Anfang mit Ende und baue Schleife am Ende
-	kopf->next = ende->next = ende;
-}
-
 int read_liste() {
-	int woerter = 0;
-	struct eintrag *element, *tmp;
-	element = (struct word*) malloc(sizeof(struct word));
+	woerter = 0;
 	FILE* f = fopen("liste.txt", "r");
 	do {
-		char wort[40];
+		
 		int i = 0;
-		while( ((wort[i] = fgetc(f)) >= 65 && wort[i] <= 90) || (wort[i] >= 97 && wort[i] <= 122) )
+		while( ((words[woerter][i] = fgetc(f))!= 10 && words[woerter][i] != EOF && 	((words[woerter][i] >= 65 && words[woerter][i] <= 90) || (words[woerter][i] >= 97 && words[woerter][i] <= 122)) ))
 		{ i++; }
-		if(wort[i]!=
-		wort[i]='\0';
-		while(fgetc(f)!=10);
-		*element->s = wort;
-		tmp = anfang->next;
-		anfang->next = element;
-		element->next = tmp;
-	} while(element->next != element->next->next);
+		if(words[woerter][i] == EOF)
+			break;
+		else if(words[woerter][i]!=10)
+			while(fgetc(f)!=10);
+		words[woerter][i]='\0';
+		printw("%s\n", words[woerter]);
+		woerter++;
+	} while(woerter<40);
 	
+	printw("Woerter: %d\n", woerter);
 	return woerter;
 }
 
 char* getWord()
 {
-	FILE* f = fopen("liste.txt", "r");
-	char* wort = malloc(sizeof(char)*40);
-	wort = "none";
-	int i = 0;
-	int j = 0;
-	int woerter = 0;
-	char c;
-	
-	if(f == NULL)
-	{
-		printw("Wörterliste nicht gefunden!");
-		getchar();
-		exit(1);
-	}
-	
-	while((c=fgetc(f)) != EOF)
-	{
-		if(c==10)
-			woerter++;
-	}
-	printw("Woerter: %d", woerter);
-	f = fopen("liste.txt", "r");
-	
 	srand(time(NULL));
-	i = rand() % woerter + 1;
 	
-	while(i>0)
-	{
-		c = fgetc(f);
-		if(c==10)
-			i--;
-	}
+	int r;
+	if(woerter==0)
+	return "none";
+	r = rand() % woerter;
 	
-	while((c=fgetc(f))!=10)
-	{
-		wort[j] = c;
-		j++;
-	}
 	
-	wort[j] = '\0';
-	
-	return wort;
+	//printw(" %s", words[r]);
+	return words[r];
 }
 
 int newGame()
 {
-	char* wort = getWord();
+	static char *wort, *tmpwort;
+	tmpwort = wort;
+	while(tmpwort == wort)
+		wort = getWord();
 	char c;
-	//int length = strlen(wort);
-	wclear(hangwin);
+	int i = 0;
+	
 	drawHangman(hangwin, 1, 0, 0);
-	mvprintw(1,1,"Wort mit %d Buchstaben:",strlen(wort));
+	
+	mvprintw(1,1,"Wort mit %d Buchstaben: ",strlen(wort));
+	for(i=0;i<strlen(wort);i++)
+		printw("-");
+	refresh();
 	if((c=getch())== 24)
 		exit(0);
 	else if(c==18)
 		return 0;
-	
+	clear();
 	return 0;
 }
